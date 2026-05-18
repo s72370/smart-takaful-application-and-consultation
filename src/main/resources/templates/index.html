@@ -44,12 +44,12 @@
                     Login
                 </a>
                 <a th:unless="${customerSignedIn}" href="/login"
-                   class="rounded-full bg-yellow-400 px-5 py-2.5 text-sm font-semibold text-zinc-950 shadow-[0_12px_30px_-16px_rgba(250,204,21,0.9)] hover:bg-yellow-300">
+                   class="hidden items-center justify-center rounded-full bg-yellow-400 px-5 py-2.5 text-sm font-semibold text-zinc-950 shadow-[0_12px_30px_-16px_rgba(250,204,21,0.9)] hover:bg-yellow-300 sm:inline-flex">
                     Instant Quote
                 </a>
                 <button th:if="${customerSignedIn}" type="button"
                         @click="openBooking('General Takaful Consultation')"
-                        class="rounded-full bg-yellow-400 px-5 py-2.5 text-sm font-semibold text-zinc-950 shadow-[0_12px_30px_-16px_rgba(250,204,21,0.9)] hover:bg-yellow-300">
+                        class="hidden items-center justify-center rounded-full bg-yellow-400 px-5 py-2.5 text-sm font-semibold text-zinc-950 shadow-[0_12px_30px_-16px_rgba(250,204,21,0.9)] hover:bg-yellow-300 sm:inline-flex">
                     Instant Quote
                 </button>
                 <form th:if="${customerSignedIn}" th:action="@{/logout}" method="post" class="hidden sm:block">
@@ -58,18 +58,87 @@
                         <i class="fa-solid fa-right-from-bracket"></i>
                     </button>
                 </form>
-            </div>
-        </div>
-        <div class="mobile-anchor-nav border-t border-yellow-400/10 px-3 pb-3 lg:hidden">
-            <div class="mx-auto grid max-w-7xl grid-cols-5 gap-1 pt-3 text-center text-[0.68rem] font-medium">
-                <a href="#top" class="rounded-full border border-yellow-400/20 px-2 py-2 text-white/75 hover:border-yellow-400 hover:text-yellow-300">Home</a>
-                <a href="#products" class="rounded-full border border-yellow-400/20 px-2 py-2 text-white/75 hover:border-yellow-400 hover:text-yellow-300">Products</a>
-                <a href="#reviews" class="rounded-full border border-yellow-400/20 px-2 py-2 text-white/75 hover:border-yellow-400 hover:text-yellow-300">Reviews</a>
-                <a href="#faq" class="rounded-full border border-yellow-400/20 px-2 py-2 text-white/75 hover:border-yellow-400 hover:text-yellow-300">FAQ</a>
-                <a href="#contact" class="rounded-full border border-yellow-400/20 px-2 py-2 text-white/75 hover:border-yellow-400 hover:text-yellow-300">Contact</a>
+                <button type="button"
+                        id="mobile-menu-open"
+                        class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-yellow-400/25 text-yellow-400 hover:border-yellow-400 hover:bg-yellow-400/10 lg:hidden"
+                        aria-label="Open navigation menu"
+                        aria-expanded="false">
+                    <i class="fa-solid fa-bars text-lg"></i>
+                </button>
             </div>
         </div>
     </nav>
+
+    <div id="mobile-menu" class="fixed inset-0 z-[90] hidden lg:hidden" role="dialog" aria-modal="true" aria-hidden="true">
+        <div id="mobile-menu-backdrop" class="absolute inset-0 bg-zinc-950/80 backdrop-blur-sm"></div>
+        <aside id="mobile-menu-panel"
+               class="absolute right-0 top-0 flex h-full w-[min(22rem,88vw)] translate-x-full flex-col border-l border-yellow-400/20 bg-[#080808] opacity-80 shadow-2xl transition duration-200 ease-out">
+            <div class="flex items-center justify-between border-b border-yellow-400/15 px-5 py-5">
+                <a href="#top" class="mobile-menu-link flex items-center gap-3">
+                    <img th:src="@{/images/brand/mgkb.png}" src="/images/brand/mgkb.png" alt="Muqmeen Group logo"
+                         class="h-12 w-12 object-contain">
+                    <span class="logo-wordmark text-xs leading-none text-yellow-400">
+                        MUQMEEN <span class="logo-wordmark-strong text-yellow-300">GROUP</span>
+                    </span>
+                </a>
+                <button type="button"
+                        id="mobile-menu-close"
+                        class="flex h-11 w-11 items-center justify-center rounded-full text-zinc-300 hover:bg-yellow-400/10 hover:text-yellow-300"
+                        aria-label="Close navigation menu">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <div class="flex-1 overflow-y-auto px-5 py-6">
+                <p class="text-xs font-semibold uppercase tracking-[0.2em] text-yellow-400">Navigate</p>
+                <div class="mt-4 grid gap-2 text-base font-medium">
+                    <a href="#top" class="mobile-menu-link flex items-center justify-between rounded-2xl border border-yellow-400/15 px-4 py-4 text-white hover:border-yellow-400 hover:bg-yellow-400/10">
+                        Home <i class="fa-solid fa-arrow-right text-sm text-yellow-400"></i>
+                    </a>
+                    <a href="#products" class="mobile-menu-link flex items-center justify-between rounded-2xl border border-yellow-400/15 px-4 py-4 text-white hover:border-yellow-400 hover:bg-yellow-400/10">
+                        Products <i class="fa-solid fa-arrow-right text-sm text-yellow-400"></i>
+                    </a>
+                    <a href="#reviews" class="mobile-menu-link flex items-center justify-between rounded-2xl border border-yellow-400/15 px-4 py-4 text-white hover:border-yellow-400 hover:bg-yellow-400/10">
+                        Reviews <i class="fa-solid fa-arrow-right text-sm text-yellow-400"></i>
+                    </a>
+                    <a href="#faq" class="mobile-menu-link flex items-center justify-between rounded-2xl border border-yellow-400/15 px-4 py-4 text-white hover:border-yellow-400 hover:bg-yellow-400/10">
+                        FAQ <i class="fa-solid fa-arrow-right text-sm text-yellow-400"></i>
+                    </a>
+                    <a href="#contact" class="mobile-menu-link flex items-center justify-between rounded-2xl border border-yellow-400/15 px-4 py-4 text-white hover:border-yellow-400 hover:bg-yellow-400/10">
+                        Contact <i class="fa-solid fa-arrow-right text-sm text-yellow-400"></i>
+                    </a>
+                </div>
+
+                <div class="mt-7 rounded-[1.5rem] border border-yellow-400/15 bg-white/[0.03] p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.18em] text-yellow-400">Account</p>
+                    <div class="mt-4 grid gap-3">
+                        <a th:if="${customerSignedIn}" href="/account"
+                           class="flex items-center justify-center rounded-full bg-yellow-400 px-5 py-3 text-sm font-semibold text-zinc-950 hover:bg-yellow-300">
+                            View Account
+                        </a>
+                        <form th:if="${customerSignedIn}" th:action="@{/logout}" method="post">
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                            <button type="submit" class="flex w-full items-center justify-center rounded-full border border-yellow-400/30 px-5 py-3 text-sm font-semibold text-white hover:bg-yellow-400/10">
+                                Logout
+                            </button>
+                        </form>
+                        <a th:unless="${customerSignedIn}" href="/login"
+                           class="flex items-center justify-center rounded-full bg-yellow-400 px-5 py-3 text-sm font-semibold text-zinc-950 hover:bg-yellow-300">
+                            Login
+                        </a>
+                        <a th:unless="${customerSignedIn}" href="/register"
+                           class="flex items-center justify-center rounded-full border border-yellow-400/30 px-5 py-3 text-sm font-semibold text-white hover:bg-yellow-400/10">
+                            Create Account
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-yellow-400/15 px-5 py-5">
+                <p class="text-xs font-medium leading-5 text-white/60">Smart Takaful consultation with private account history and focused follow-up.</p>
+            </div>
+        </aside>
+    </div>
 
     <main class="overflow-hidden bg-[#f8f7f2]">
         <section id="home" class="relative bg-[radial-gradient(circle_at_12%_12%,#fff7cc_0,#fff7cc_18%,transparent_38%),linear-gradient(110deg,#f8fbff_0%,#fffaf1_100%)] lg:min-h-[calc(100vh-5rem)]">
@@ -100,7 +169,7 @@
                         </button>
                     </div>
 
-                    <div class="mt-7 grid max-w-xl grid-cols-1 gap-3 text-xs font-medium text-zinc-600 sm:mt-8 sm:grid-cols-3 sm:gap-4 sm:text-sm">
+                    <div class="mt-7 hidden max-w-xl grid-cols-1 gap-3 text-xs font-medium text-zinc-600 sm:mt-8 sm:grid sm:grid-cols-3 sm:gap-4 sm:text-sm">
                         <div class="flex items-center gap-2"><i class="fa-solid fa-check-circle text-yellow-500"></i> Licensed Advice</div>
                         <div class="flex items-center gap-2"><i class="fa-solid fa-clock text-yellow-500"></i> Fast Follow-Up</div>
                         <div class="flex items-center gap-2"><i class="fa-solid fa-lock text-yellow-500"></i> Private History</div>
@@ -160,6 +229,7 @@
 
                     <article th:each="product, iter : ${products}"
                              class="group relative flex min-h-[25rem] flex-col justify-between overflow-hidden rounded-[2rem] border border-yellow-400/15 bg-[#111111] p-6 shadow-[0_28px_70px_-58px_rgba(250,204,21,0.55)] transition duration-300 hover:-translate-y-1 hover:border-yellow-400/45 hover:shadow-premium"
+                             th:data-brochure-url="${product.brochureUrl}"
                              th:classappend="${product.featured} ? ' ring-2 ring-yellow-400/90' : ''">
                         <p th:if="${product.featured}" class="absolute right-5 top-5 z-20 rounded-full bg-yellow-400 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-zinc-950">Popular</p>
                         <div>
@@ -178,17 +248,17 @@
                             <h3 class="mt-6 text-2xl font-semibold text-yellow-400" th:text="${product.name}">Product</h3>
                             <p class="mt-3 text-sm font-medium leading-6 text-white/70" th:text="${product.description}">Description</p>
                         </div>
-                        <div class="mt-7 grid grid-cols-2 gap-3">
+                        <div class="product-card-actions mt-7 grid grid-cols-2 gap-3">
                             <a th:if="${product.brochureUrl != null && !#strings.isEmpty(product.brochureUrl)}"
                                th:href="${product.brochureUrl}"
                                target="_blank"
                                rel="noopener"
-                               class="inline-flex items-center justify-center rounded-full border border-yellow-400/25 px-4 py-3 text-sm font-semibold text-white hover:border-yellow-400 hover:bg-yellow-400/10">
+                               class="mobile-view-details inline-flex items-center justify-center rounded-full border border-yellow-400/25 px-4 py-3 text-sm font-semibold text-white hover:border-yellow-400 hover:bg-yellow-400/10">
                                 View Details
                             </a>
                             <button th:unless="${product.brochureUrl != null && !#strings.isEmpty(product.brochureUrl)}"
                                     type="button"
-                                    class="inline-flex items-center justify-center rounded-full border border-yellow-400/25 px-4 py-3 text-sm font-semibold text-white">
+                                    class="mobile-view-details inline-flex items-center justify-center rounded-full border border-yellow-400/25 px-4 py-3 text-sm font-semibold text-white">
                                 View Details
                             </button>
                             <button th:if="${customerSignedIn}" type="button"
@@ -216,7 +286,7 @@
                         <h2 class="mt-3 text-3xl font-semibold tracking-tight text-yellow-400 sm:text-4xl">Families choose clarity first</h2>
                         <p class="mt-3 max-w-xl text-sm font-medium leading-6 text-white/70">Real product conversations, practical comparisons, and transparent follow-up from consultation to account history.</p>
                     </div>
-                    <div class="flex gap-3">
+                    <div class="hidden gap-3 sm:flex">
                         <button type="button" @click="prev()" aria-label="Previous review"
                                 class="flex h-11 w-11 items-center justify-center rounded-full border border-yellow-400/25 text-white transition hover:border-yellow-400 hover:bg-yellow-400/10">
                             <i class="fa-solid fa-arrow-left"></i>
@@ -524,6 +594,69 @@
             </button>
         </form>
     </div>
+
+    <script>
+        (function () {
+            const menu = document.getElementById('mobile-menu');
+            const panel = document.getElementById('mobile-menu-panel');
+            const openBtn = document.getElementById('mobile-menu-open');
+            const closeBtn = document.getElementById('mobile-menu-close');
+            const backdrop = document.getElementById('mobile-menu-backdrop');
+            const links = document.querySelectorAll('.mobile-menu-link');
+            if (!menu || !panel || !openBtn || !closeBtn || !backdrop) return;
+
+            function openMenu() {
+                menu.classList.remove('hidden');
+                menu.setAttribute('aria-hidden', 'false');
+                openBtn.setAttribute('aria-expanded', 'true');
+                void panel.offsetWidth;
+                panel.classList.remove('translate-x-full', 'opacity-80');
+                panel.classList.add('translate-x-0', 'opacity-100');
+            }
+
+            function closeMenu() {
+                panel.classList.add('translate-x-full', 'opacity-80');
+                panel.classList.remove('translate-x-0', 'opacity-100');
+                openBtn.setAttribute('aria-expanded', 'false');
+                window.setTimeout(function () {
+                    menu.classList.add('hidden');
+                    menu.setAttribute('aria-hidden', 'true');
+                }, 180);
+            }
+
+            openBtn.addEventListener('click', openMenu);
+            closeBtn.addEventListener('click', closeMenu);
+            backdrop.addEventListener('click', closeMenu);
+            links.forEach(function (link) {
+                link.addEventListener('click', closeMenu);
+            });
+            document.addEventListener('keydown', function (event) {
+                if (event.key === 'Escape' && !menu.classList.contains('hidden')) {
+                    closeMenu();
+                }
+            });
+        })();
+    </script>
+
+    <script>
+        (function () {
+            const mobileCardQuery = window.matchMedia('(max-width: 767px)');
+            const productCards = document.querySelectorAll('[data-brochure-url]');
+            if (!productCards.length) return;
+
+            function shouldIgnoreTap(target) {
+                return Boolean(target.closest('a, button, input, select, textarea, label'));
+            }
+
+            productCards.forEach(function (card) {
+                card.addEventListener('click', function (event) {
+                    const brochureUrl = card.dataset.brochureUrl;
+                    if (!mobileCardQuery.matches || !brochureUrl || shouldIgnoreTap(event.target)) return;
+                    window.open(brochureUrl, '_blank', 'noopener');
+                });
+            });
+        })();
+    </script>
 
     <script>
         (function () {

@@ -382,23 +382,9 @@ body [class*="hover:text-zinc-900"]:not([class*="hover:bg-yellow"]):hover,
   color: #facc15 !important;
 }
 
-.mobile-anchor-nav {
-  scrollbar-width: none;
-}
-
-.mobile-anchor-nav > div {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.mobile-anchor-nav::-webkit-scrollbar,
-.mobile-anchor-nav > div::-webkit-scrollbar {
-  display: none;
-}
-
 @media (max-width: 1023px) {
   main > section[id]:not(#home) {
-    scroll-margin-top: 7.75rem;
+    scroll-margin-top: 5.25rem;
   }
 }
 
@@ -430,6 +416,18 @@ body [class*="hover:text-zinc-900"]:not([class*="hover:bg-yellow"]):hover,
 
   #products article {
     min-height: auto;
+  }
+
+  #products article[data-brochure-url] {
+    cursor: pointer;
+  }
+
+  .mobile-view-details {
+    display: none !important;
+  }
+
+  .product-card-actions {
+    grid-template-columns: minmax(0, 1fr) !important;
   }
 
   #reviews article p {
