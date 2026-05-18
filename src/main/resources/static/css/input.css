@@ -381,3 +381,98 @@ body [class*="hover:text-zinc-900"]:not([class*="hover:bg-yellow"]):hover,
 .muqmeen-dark-site [class*="hover:text-zinc-900"]:not([class*="hover:bg-yellow"]):hover {
   color: #facc15 !important;
 }
+
+.mobile-anchor-nav {
+  scrollbar-width: none;
+}
+
+.mobile-anchor-nav > div {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.mobile-anchor-nav::-webkit-scrollbar,
+.mobile-anchor-nav > div::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-width: 1023px) {
+  main > section[id]:not(#home) {
+    scroll-margin-top: 7.75rem;
+  }
+}
+
+@media (max-width: 767px) {
+  #home {
+    min-height: auto;
+  }
+
+  .hero-title {
+    line-height: 0.98 !important;
+  }
+
+  .hero-agent-image {
+    object-position: center top;
+  }
+
+  .hero-support-badge {
+    transform: scale(0.9);
+    transform-origin: left top;
+  }
+
+  #products,
+  #reviews,
+  #faq,
+  #contact {
+    padding-top: 4.25rem !important;
+    padding-bottom: 4.25rem !important;
+  }
+
+  #products article {
+    min-height: auto;
+  }
+
+  #reviews article p {
+    min-height: auto !important;
+  }
+
+  #contact input,
+  #contact select,
+  #contact textarea,
+  #booking-modal input,
+  #booking-modal select,
+  #booking-modal textarea {
+    font-size: 16px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  #chat-toggle {
+    right: 1rem;
+    bottom: 1rem;
+  }
+
+  #chat-panel {
+    inset: auto 0.75rem 0.75rem 0.75rem !important;
+    width: auto !important;
+    height: min(42rem, calc(100dvh - 1.5rem)) !important;
+    max-height: calc(100dvh - 1.5rem) !important;
+    max-width: none !important;
+    border-radius: 1.25rem !important;
+  }
+
+  #chat-messages {
+    padding: 1rem !important;
+  }
+
+  #chat-form {
+    gap: 0.75rem !important;
+    padding: 0.85rem !important;
+  }
+
+  #chat-input {
+    min-height: 3rem;
+    max-height: 7rem;
+    font-size: 16px !important;
+  }
+}
