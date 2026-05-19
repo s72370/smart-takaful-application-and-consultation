@@ -48,7 +48,8 @@
                     Instant Quote
                 </a>
                 <button th:if="${customerSignedIn}" type="button"
-                        @click="openBooking('General Takaful Consultation')"
+                        data-open-booking="General Takaful Consultation"
+                        @click.prevent="openBooking('General Takaful Consultation')"
                         class="hidden items-center justify-center rounded-full bg-yellow-400 px-5 py-2.5 text-sm font-semibold text-zinc-950 shadow-[0_12px_30px_-16px_rgba(250,204,21,0.9)] hover:bg-yellow-300 sm:inline-flex">
                     Instant Quote
                 </button>
@@ -160,6 +161,7 @@
                             </span>
                         </a>
                         <button th:if="${customerSignedIn}" type="button"
+                                data-open-booking="General Takaful Consultation"
                                 @click="openBooking('General Takaful Consultation')"
                                 class="group flex min-h-12 w-full items-center justify-between gap-3 rounded-full px-4 py-2.5 text-left text-sm font-medium text-white transition duration-300 hover:bg-yellow-400/10 sm:text-base">
                             <span class="question-prompt-text min-w-0" :class="questionKey % 2 === 0 ? 'question-prompt-type-a' : 'question-prompt-type-b'" x-text="heroQuestion">How much coverage do I need?</span>
@@ -263,6 +265,7 @@
                             </button>
                             <button th:if="${customerSignedIn}" type="button"
                                     th:data-product-name="${product.name}"
+                                    th:data-open-booking="${product.name}"
                                     @click="openBooking($el.dataset.productName || 'Consultation')"
                                     class="inline-flex items-center justify-center gap-2 rounded-full bg-yellow-400 px-5 py-3 text-sm font-semibold text-zinc-950 hover:bg-yellow-300">
                                 Consult Agent <i class="fa-solid fa-arrow-right"></i>
@@ -479,10 +482,10 @@
         <p class="mx-auto mt-8 max-w-7xl text-center text-xs font-semibold">Copyright 2026. All rights reserved.</p>
     </footer>
 
-    <div id="booking-modal" x-cloak x-show="bookingOpen" @click.self="closeBooking()"
+    <div id="booking-modal" x-cloak x-show="bookingOpen" x-transition.opacity.duration.150ms @click.self="closeBooking()"
          class="fixed inset-0 z-[100] flex items-center justify-center bg-zinc-950/70 p-4 backdrop-blur-sm">
-        <div class="relative flex max-h-[90vh] w-full max-w-lg flex-col rounded-[2rem] bg-white shadow-2xl">
-            <button type="button" @click="closeBooking()" class="absolute right-5 top-5 text-zinc-400 hover:text-zinc-950">
+        <div x-transition.duration.180ms class="relative flex max-h-[90vh] w-full max-w-lg flex-col rounded-[2rem] bg-white shadow-2xl">
+            <button id="booking-close" type="button" @click="closeBooking()" class="absolute right-5 top-5 text-zinc-400 hover:text-zinc-950">
                 <i class="fa-solid fa-xmark text-xl"></i>
             </button>
 
@@ -611,6 +614,8 @@
                 menu.classList.remove('hidden');
                 menu.setAttribute('aria-hidden', 'false');
                 openBtn.setAttribute('aria-expanded', 'true');
+                document.documentElement.classList.add('menu-open');
+                document.body.classList.add('menu-open');
                 void panel.offsetWidth;
                 panel.classList.remove('translate-x-full', 'opacity-80');
                 panel.classList.add('translate-x-0', 'opacity-100');
@@ -623,6 +628,8 @@
                 window.setTimeout(function () {
                     menu.classList.add('hidden');
                     menu.setAttribute('aria-hidden', 'true');
+                    document.documentElement.classList.remove('menu-open');
+                    document.body.classList.remove('menu-open');
                 }, 180);
             }
 
@@ -636,6 +643,40 @@
                 if (event.key === 'Escape' && !menu.classList.contains('hidden')) {
                     closeMenu();
                 }
+            });
+        })();
+    </script>
+
+    <script>
+        (function () {
+            const bookingButtons = document.querySelectorAll('[data-open-booking]');
+            const modal = document.getElementById('booking-modal');
+            const closeBtn = document.getElementById('booking-close');
+            const productInput = document.getElementById('productType');
+            const productName = document.getElementById('modal-product-name');
+            if (!bookingButtons.length || !modal) return;
+
+            bookingButtons.forEach(function (button) {
+                button.addEventListener('click', function () {
+                    if (window.Alpine) return;
+                    const selected = button.dataset.openBooking || 'General Takaful Consultation';
+                    if (productInput) productInput.value = selected;
+                    if (productName) productName.textContent = selected;
+                    modal.style.display = 'flex';
+                    modal.removeAttribute('x-cloak');
+                    document.body.classList.add('modal-open');
+                });
+            });
+
+            function closeFallback() {
+                if (window.Alpine) return;
+                modal.style.display = 'none';
+                document.body.classList.remove('modal-open');
+            }
+
+            if (closeBtn) closeBtn.addEventListener('click', closeFallback);
+            modal.addEventListener('click', function (event) {
+                if (event.target === modal) closeFallback();
             });
         })();
     </script>
@@ -909,6 +950,10 @@
                         this.selectedProduct = this.selectedProduct || 'Consultation';
                         this.bookingOpen = true;
                     }
+                    this.$watch('bookingOpen', value => {
+                        document.body.classList.toggle('modal-open', value);
+                    });
+                    document.body.classList.toggle('modal-open', this.bookingOpen);
                 },
                 openBooking(productName) {
                     this.selectedProduct = productName;
