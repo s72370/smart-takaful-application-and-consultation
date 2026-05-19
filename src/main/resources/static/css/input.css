@@ -414,8 +414,36 @@ body [class*="hover:text-zinc-900"]:not([class*="hover:bg-yellow"]):hover,
     padding-bottom: 4.25rem !important;
   }
 
+  #products > div,
+  #reviews > div {
+    padding-left: 1.35rem !important;
+    padding-right: 1.35rem !important;
+  }
+
+  #products .grid {
+    gap: 1rem !important;
+  }
+
   #products article {
     min-height: auto;
+    border-radius: 1.45rem !important;
+    padding: 1.05rem !important;
+  }
+
+  #products article .h-52 {
+    height: 10.5rem !important;
+  }
+
+  #products article h3 {
+    margin-top: 1rem !important;
+    font-size: 1.22rem !important;
+    line-height: 1.55rem !important;
+  }
+
+  #products article h3 + p {
+    margin-top: 0.55rem !important;
+    font-size: 0.82rem !important;
+    line-height: 1.38rem !important;
   }
 
   #products article[data-brochure-url] {
@@ -428,6 +456,17 @@ body [class*="hover:text-zinc-900"]:not([class*="hover:bg-yellow"]):hover,
 
   .product-card-actions {
     grid-template-columns: minmax(0, 1fr) !important;
+    margin-top: 1rem !important;
+  }
+
+  .product-card-actions a,
+  .product-card-actions button {
+    padding-top: 0.75rem !important;
+    padding-bottom: 0.75rem !important;
+  }
+
+  .review-carousel-grid {
+    touch-action: pan-y;
   }
 
   #reviews article p {

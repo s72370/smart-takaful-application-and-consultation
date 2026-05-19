@@ -298,7 +298,9 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4">
+                <div class="review-carousel-grid grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4"
+                     @touchstart.passive="startSwipe($event)"
+                     @touchend.passive="finishSwipe($event)">
                     <template x-for="review in visibleReviews()" :key="review.name">
                     <article class="rounded-[1.5rem] border border-yellow-400/20 bg-[#111111] p-6 shadow-[0_28px_70px_-58px_rgba(250,204,21,0.5)] transition duration-300 hover:-translate-y-1 hover:border-yellow-400/45">
                         <div class="flex items-center gap-3">
@@ -790,6 +792,8 @@
             return {
                 activeIndex: 0,
                 visibleCount: 4,
+                swipeStartX: 0,
+                swipeStartY: 0,
                 reviews: [
                     {
                         initial: 'A',
@@ -855,6 +859,19 @@
                 },
                 goTo(index) {
                     this.activeIndex = index;
+                },
+                startSwipe(event) {
+                    if (window.innerWidth >= 768 || !event.changedTouches.length) return;
+                    this.swipeStartX = event.changedTouches[0].clientX;
+                    this.swipeStartY = event.changedTouches[0].clientY;
+                },
+                finishSwipe(event) {
+                    if (window.innerWidth >= 768 || !event.changedTouches.length) return;
+                    const touch = event.changedTouches[0];
+                    const deltaX = touch.clientX - this.swipeStartX;
+                    const deltaY = touch.clientY - this.swipeStartY;
+                    if (Math.abs(deltaX) < 45 || Math.abs(deltaX) < Math.abs(deltaY) * 1.25) return;
+                    deltaX < 0 ? this.next() : this.prev();
                 }
             };
         }
